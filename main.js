@@ -11,7 +11,7 @@ app.on('window-all-closed', function() {
 
 // アプリ起動後の処理
 app.on('ready', function() {
-	var subpy = require('child_process').spawn('python',['./hello.py']);
+	var subpy = require('child_process').spawn('python',['./index.py']);
 	var rq = require('request-promise');
 	var mainAddr = 'http://localhost:5000';
 
