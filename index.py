@@ -1,5 +1,3 @@
-from __future__ import print_function
-import twitter
 from flask import Flask
 
 app = Flask(__name__)
