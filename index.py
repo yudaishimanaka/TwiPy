@@ -15,7 +15,7 @@ def index():
     )
     twitter_userstream = TwitterStream(auth=auth, domain='userstream.twitter.com')
     for msg in twitter_userstream.user():
-        print(msg)
+        print(msg.get('text'))
 
 if __name__ == "__main__":
     app.run(host=app.config['HOST'], port=app.config['PORT'], debug=app.config['DEBUG'])
