@@ -1,4 +1,3 @@
 node_modules/*
-templates/*
 !.gitkeep
 app.cfg
