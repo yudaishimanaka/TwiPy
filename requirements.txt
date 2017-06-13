@@ -26,6 +26,7 @@ mdx-del-ins==1.0
 mdx-linkify==0.6
 mistune==0.7.4
 numpy==1.12.0
+oauthlib==2.0.2
 olefile==0.44
 packaging==16.8
 pandas==0.19.2
@@ -42,10 +43,12 @@ pytz==2016.10
 query-string==0.0.0
 request==0.0.0
 requests==2.13.0
+requests-oauthlib==0.8.0
 setupfiles==0.0.0
 six==1.10.0
 slackbot==0.4.1
 slacker==0.9.42
+tweetpy==0.1
 twitter==1.17.1
 uWSGI==2.0.14
 webencodings==0.5.1
