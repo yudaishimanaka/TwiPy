@@ -3,13 +3,12 @@ import time
 from flask import Flask
 
 app = Flask(__name__)
+app.config.from_pyfile('./app.cfg', silent=True)
+
 
 @app.route("/")
-
-def hello():
-    return "This is powered by Python backend.<br>" \
-		   "Flask + Electron desktop application!!!"
+def index():
+    return "This is powered by Python backend.<brFlask + Electron desktop application!!!"
 
 if __name__ == "__main__":
-	print('on hello')
-	app.run(host="127.0.0.1", port=5000)
+    app.run(host=app.config['HOST'], port=app.config['PORT'], debug=app.config['DEBUG'])
