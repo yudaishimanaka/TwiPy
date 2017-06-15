@@ -1,7 +1,4 @@
-DEBUG=True
-HOST='localhost'
-PORT=5000
-CONSUMER_KEY=""
-CONSUMER_SECRET=""
-TOKEN=""
-TOKEN_SECRET=""
+CONSUMER_KEY="Your app consumer_key..."
+CONSUMER_SECRET="Your app consumer_secret..."
+TOKEN="Your app access_token..."
+TOKEN_SECRET="Your app access_token_secret..."
