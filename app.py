@@ -29,7 +29,7 @@ elif async_mode == 'gevent':
 import json
 import time
 from threading import Thread
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 from tweepy.streaming import StreamListener, Stream
@@ -47,9 +47,6 @@ auth.set_access_token(app.config['TOKEN'], app.config['TOKEN_SECRET'])
 
 
 class StdOutListner(StreamListener):
-    def __init__(self):
-        pass
-
     def on_data(self, raw_data):
         try:
             tweet = json.loads(raw_data)
@@ -70,6 +67,12 @@ def background():
     stream.userstream()
 
 
+def restapi_timeline():
+    api = tweepy.API(auth)
+    home_timeline = api.home_timeline(count=30)
+    return home_timeline
+
+
 @app.route('/')
 def index():
     global thread
@@ -77,7 +80,7 @@ def index():
         thread = Thread(target=background)
         thread.daemon = True
         thread.start()
-    return render_template('index.html')
+    return render_template('index.html', home_timeline=restapi_timeline())
 
 l = StdOutListner()
 
