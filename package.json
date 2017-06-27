@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jquery": "*",
     "request": "*",
     "request-promise": "*"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1"
   }
 }

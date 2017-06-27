@@ -82,6 +82,29 @@ def index():
         thread.start()
     return render_template('index.html', home_timeline=restapi_timeline())
 
+
+@app.route('/update_status', methods=['POST'])
+def tweet():
+    status = request.json['status']
+    api = tweepy.API(auth)
+    if status:
+        update_status = api.update_status(status)
+        return "Request OK"
+    else:
+        return "None data in Status"
+
+
+@app.route('/action_favorite', methods=['POST'])
+def action_like():
+    status_id = request.json['status_id']
+    api = tweepy.API(auth)
+    if status_id:
+        create_favorite = api.create_favorite(status_id)
+        return "Request OK"
+    else:
+        return "None data in Status"
+
+
 l = StdOutListner()
 
 if __name__ == '__main__':

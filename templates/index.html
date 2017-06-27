@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="static/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script type="text/javascript" src="//code.jquery.com/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
@@ -22,9 +23,9 @@
                 console.log(msg.data);
                 if(!('retweeted_status' in msg.data) && msg.data.is_quote_status == false){
                     if('media' in msg.data.entities){
-                        $('#tweet').prepend('<div class="media animated fadeInDown"><img class="d-flex mr-3 rounded" src="' + msg.data['user']['profile_image_url'] + '" alt="Generic placeholder image"><dib class="media-body"><h5 class="mt-0"><b>' + msg.data['user']['name'] + '</b></h5>' + msg.data['text'] + '<br><a href="' + msg.data['entities']['media'][0]['url'] + '"><img src="' + msg.data['entities']['media'][0]['media_url'] + '" class="img-thumbnail"></a></div></div><hr>').html();
+                        $('#tweet').prepend('<div class="media animated fadeInDown"><img class="d-flex mr-3 rounded" src="' + msg.data['user']['profile_image_url'] + '" alt="Generic placeholder image"><dib class="media-body"><h5 class="mt-0"><b>' + msg.data['user']['name'] + '</b></h5>' + msg.data['text'] + '<br><a href="' + msg.data['entities']['media'][0]['url'] + '"><img src="' + msg.data['entities']['media'][0]['media_url'] + '" class="img-thumbnail"></a></div></div><hr>');
                     }else{
-                        $('#tweet').prepend('<div class="media animated fadeInDown"><img class="d-flex mr-3 rounded" src="' + msg.data['user']['profile_image_url'] + '" alt="Generic placeholder image"><dib class="media-body"><h5 class="mt-0"><b>' + msg.data['user']['name'] + '</b></h5>' + msg.data['text'] + '</div></div><hr>').html();
+                        $('#tweet').prepend('<div class="media animated fadeInDown"><img class="d-flex mr-3 rounded" src="' + msg.data['user']['profile_image_url'] + '" alt="Generic placeholder image"><dib class="media-body"><h5 class="mt-0"><b>' + msg.data['user']['name'] + '</b></h5>' + msg.data['text'] + '</div></div><hr>');
                     }
                 }else if(!('retweeted_status' in msg.data) && msg.data.is_quote_status == true){
                     if('media' in msg.data.quoted_status.entities){
@@ -33,7 +34,7 @@
                         $('#tweet').prepend('<div class="media animated fadeInDown"><img class="d-flex mr-3 rounded" src="' + msg.data['user']['profile_image_url'] + '" alt="Generic placeholder image"><div class="media-body"><h5 class="mt-0"><b>' + msg.data['user']['name'] + '</b></h5>' + msg.data['text'] + '<div class="card card-outline-success"><div class="card-block"><blockquote class="card-blockquote"><div class="media mt-3"><a class="d-flex pr-3" href="#"><img class="d-flex mr-3 rounded" src="' + msg.data['quoted_status']['user']['profile_image_url'] + '" alt="Generic placeholder image"></a><div class="media-body"><h5 class="mt-0"><b>' + msg.data['quoted_status']['user']['name'] + '</b></h5>' + msg.data['quoted_status']['text'] + '</div></div></blockquote></div></div></div></div><hr>');
                     }
                 }else{
-                    if('media' in msg.data.entities){
+                    if('media' in msg.data.retweeted_status.entities){
                         $('#tweet').prepend('<div class="animated fadeInDown"><h5 class="mt-0" style="display:inline"><b>' + msg.data['user']['name'] + '　</b><span class="badge badge-success">retweeted</span></h5><div class="media"><img class="d-flex mr-3 rounded" src="' + msg.data['retweeted_status']['user']['profile_image_url'] + '" alt="Generic placeholder image"><div class="media-body"><h5 class="mt-0"><b>' + msg.data['retweeted_status']['user']['name'] + '</b></h5>' + msg.data['retweeted_status']['text'] + '<br><a href="' + msg.data['retweeted_status']['entities']['media'][0]['url'] + '"><img src="' + msg.data['retweeted_status']['entities']['media'][0]['media_url'] + '" class="img-thumbnail"></a></div></div><hr></div>');
                     }else{
                         $('#tweet').prepend('<div class="animated fadeInDown"><h5 class="mt-0" style="display:inline"><b>' + msg.data['user']['name'] + '　</b><span class="badge badge-success">retweeted</span></h5><div class="media"><img class="d-flex mr-3 rounded" src="' + msg.data['retweeted_status']['user']['profile_image_url'] + '" alt="Generic placeholder image"><div class="media-body"><h5 class="mt-0"><b>' + msg.data['retweeted_status']['user']['name'] + '</b></h5>' + msg.data['retweeted_status']['text'] + '</div></div><hr></div>');
@@ -41,6 +42,9 @@
                 }
             });
         });
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').focus()
+        })
     </script>
     <style>
         ::-webkit-scrollbar {
@@ -54,6 +58,32 @@
             border-radius: 10px;
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
         }
+        .tweet {
+             position: fixed;
+             bottom: 8px;
+             right: 10px;
+
+             padding:2pt;
+             filter:alpha(opacity=85);
+             -moz-opacity:0.85;
+             -khtml-opacity: 0.85;
+             opacity:0.85;
+
+             text-shadow: 0 -1px 1px #FFF, -1px 0 1px #FFF, 1px 0 1px #aaa;
+             -webkit-box-shadow: 1px 1px 2px #E7E7E7;
+             -moz-box-shadow: 1px 1px 2px #E7E7E7;
+             -webkit-border-radius: 3px;
+             -moz-border-radius: 3px;
+        }
+        .btn-circle-lg {
+            width: 79px;
+            height: 79px;
+            text-align: center;
+            padding: 13px 0;
+            font-size: 30px;
+            line-height: 2.00;
+            border-radius: 70px;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +92,7 @@
         <div id="tweet" class="animated fadeInDown">
         {% for data in home_timeline %}
             {% if not data.retweeted_status and data.is_quote_status == False %}
-                <div class="media">
+                <div class="media" id="{{ data.id_str }}">
                     <img class="d-flex mr-3 rounded" src="{{ data.author.profile_image_url }}" alt="Generic placeholder image">
                     <div class="media-body">
                         <h5 class="mt-0"><b>{{ data.author.name }}</b></h5>
@@ -70,11 +100,16 @@
                         {% if data.entities.media %}
                         <a href="{{ data.entities.media.0.url }}" target="_blank"><img src="{{ data.entities.media.0.media_url }}" class="img-thumbnail"></a>
                         {% endif %}
+                        <br>
+                        <a href="#reply" class="reply"><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+                        <a href="#retweet" class="retweet"><i class="fa fa-retweet" aria-hidden="true"></i></a>
+                        <a href="#like" class="like"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <a href="#setting" class="setting"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <hr>
-            {% elif data.is_quote_status == True %}
-                <div class="media">
+            {% elif data.is_quote_status == True and data.quoted_status %}
+                <div class="media" id="{{ data.id_str }}">
                     <img class="d-flex mr-3 rounded" src="{{ data.author.profile_image_url }}" alt="Generic placeholder image">
                     <div class="media-body">
                         <h5 class="mt-0"><b>{{ data.author.name }}</b></h5>
@@ -95,17 +130,22 @@
                                             {% if data.quoted_status.entities.media %}
                                             <a href="{{ data.quoted_status.entities.media.0.url }}" target="_blank"><img src="{{ data.quoted_status.entities.media.0.media_url }}" class="img-thumbnail"></a>
                                             {% endif %}
+                                            <br>
                                         </div>
                                     </div>
                                 </blockquote>
                             </div>
                         </div>
+                        <br><a href="#reply" class="reply"><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+                        <a href="#retweet" class="retweet"><i class="fa fa-retweet" aria-hidden="true"></i></a>
+                        <a href="#like" class="like"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <a href="#setting" class="setting"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <hr>
             {% else %}
                 <h5 class="mt-0" style="display:inline"><b>{{ data.author.name }}</b>　<span class="badge badge-success">retweeted</span></h5>
-                <div class="media">
+                <div class="media" id="{{ data.id_str }}">
                     <img class="d-flex mr-3 rounded" src="{{ data.retweeted_status.user.profile_image_url }}" alt="Generic placeholder image">
                     <div class="media-body">
                         <h5 class="mt-0"><b>{{ data.retweeted_status.user.name }}</b></h5>
@@ -113,6 +153,11 @@
                         {% if data.retweeted_status.entities.media %}
                         <a href="{{ data.retweeted_status.entities.media.0.url }}" target="_blank"><img src="{{ data.retweeted_status.entities.media.0.media_url }}" class="img-thumbnail"></a>
                         {% endif %}
+                        <br>
+                        <a href="#reply" class="reply"><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+                        <a href="#retweet" class="retweet"><i class="fa fa-retweet" aria-hidden="true"></i></a>
+                        <a href="#like" class="like"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <a href="#setting" class="setting"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <hr>
@@ -120,8 +165,30 @@
         {% endfor %}
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <a href="#aboutModal" data-toggle="modal" data-target="#myModal" class="btn btn-circle-lg btn-info tweet"><span class="fa fa-comment"></span></a>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ツイートする</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="status" class="form-control" rows="4" autocomplete="off"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button id="clear" type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                    <button id="post_tweet" type="button" class="btn btn-primary">ツイート</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="static/js/update.js" crossorigin="anonymous"></script>
 </body>
 </html>
